@@ -1,0 +1,50 @@
+@model List<Book>
+
+<h2>Online Book Store</h2>
+
+<table class="table table-bordered">
+
+<tr>
+<th>Title</th>
+<th>Author</th>
+<th>Price</th>
+<th>Available</th>
+<th>Buy</th>
+</tr>
+
+@foreach(var item in Model)
+{
+<tr>
+
+<td>@item.Title</td>
+<td>@item.Author</td>
+<td>@item.Price</td>
+<td>@item.AvailableQuantity</td>
+
+<td>
+
+<form method="post"
+      asp-action="Buy">
+
+<input type="hidden"
+       name="bookId"
+       value="@item.Id" />
+
+<input type="number"
+       name="quantity"
+       value="1"
+       min="1"
+       max="@item.AvailableQuantity"/>
+
+<button class="btn btn-primary">
+Buy
+</button>
+
+</form>
+
+</td>
+
+</tr>
+}
+
+</table>
