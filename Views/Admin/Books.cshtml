@@ -1,0 +1,90 @@
+@model AdminBooksViewModel
+@{
+    ViewData["Title"] = "Manage books";
+}
+
+<section class="admin-page">
+    <header class="admin-heading admin-heading-row">
+        <div>
+            <p class="admin-eyebrow">Bookstore administration</p>
+            <h1>Catalog</h1>
+        </div>
+        <form method="post" asp-controller="Admin" asp-action="Logout">
+            <button type="submit" class="btn btn-outline-secondary">Sign out</button>
+        </form>
+    </header>
+
+    @if (TempData["SuccessMessage"] is string successMessage)
+    {
+        <div class="alert alert-success" role="status">@successMessage</div>
+    }
+    @if (!string.IsNullOrWhiteSpace(Model.ErrorMessage))
+    {
+        <div class="alert alert-danger" role="alert">@Model.ErrorMessage</div>
+    }
+
+    <div class="admin-columns">
+        <section class="admin-entry">
+            <h2>Add a book</h2>
+            <form method="post" asp-controller="Admin" asp-action="Books" class="admin-form">
+                <div asp-validation-summary="ModelOnly" class="validation-summary"></div>
+                <div>
+                    <label asp-for="BookEntry.Title"></label>
+                    <input asp-for="BookEntry.Title" class="form-control" maxlength="150" />
+                    <span asp-validation-for="BookEntry.Title" class="field-validation"></span>
+                </div>
+                <div>
+                    <label asp-for="BookEntry.Author"></label>
+                    <input asp-for="BookEntry.Author" class="form-control" maxlength="100" />
+                    <span asp-validation-for="BookEntry.Author" class="field-validation"></span>
+                </div>
+                <div class="admin-fields-row">
+                    <div>
+                        <label asp-for="BookEntry.Price"></label>
+                        <input asp-for="BookEntry.Price" class="form-control" type="number" min="0.01" step="0.01" />
+                        <span asp-validation-for="BookEntry.Price" class="field-validation"></span>
+                    </div>
+                    <div>
+                        <label asp-for="BookEntry.AvailableQuantity"></label>
+                        <input asp-for="BookEntry.AvailableQuantity" class="form-control" type="number" min="0" step="1" />
+                        <span asp-validation-for="BookEntry.AvailableQuantity" class="field-validation"></span>
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-primary">Add to catalog</button>
+            </form>
+        </section>
+
+        <section class="admin-inventory">
+            <h2>Books <span class="admin-count">@Model.Books.Count</span></h2>
+            @if (Model.Books.Count == 0)
+            {
+                <p class="admin-empty">No catalog entries yet.</p>
+            }
+            else
+            {
+                <div class="table-responsive">
+                    <table class="table admin-table">
+                        <thead>
+                            <tr><th>Title</th><th>Author</th><th>Price</th><th>Stock</th></tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var book in Model.Books)
+                            {
+                                <tr>
+                                    <td>@book.Title</td>
+                                    <td>@book.Author</td>
+                                    <td>@book.Price.ToString("C")</td>
+                                    <td>@book.AvailableQuantity</td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            }
+        </section>
+    </div>
+</section>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

@@ -21,6 +21,106 @@ body {
   margin-bottom: 60px;
 }
 
+.admin-page {
+  max-width: 1180px;
+  margin: 2rem auto;
+}
+
+.admin-heading {
+  margin-bottom: 2rem;
+  border-bottom: 1px solid #d5ddd9;
+  padding-bottom: 1rem;
+}
+
+.admin-heading-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.admin-eyebrow {
+  margin: 0 0 .35rem;
+  color: #52746a;
+  font-size: .78rem;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.admin-heading h1 {
+  margin: 0;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 2rem;
+}
+
+.admin-columns {
+  display: grid;
+  grid-template-columns: minmax(260px, 340px) minmax(0, 1fr);
+  gap: 2rem;
+  align-items: start;
+}
+
+.admin-entry h2,
+.admin-inventory h2 {
+  margin-bottom: 1.25rem;
+  font-size: 1.15rem;
+}
+
+.admin-form {
+  display: grid;
+  gap: 1rem;
+}
+
+.admin-form label {
+  display: block;
+  margin-bottom: .35rem;
+  font-weight: 600;
+}
+
+.admin-fields-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: .75rem;
+}
+
+.admin-count {
+  color: #52746a;
+  font-size: .9rem;
+}
+
+.admin-table th {
+  white-space: nowrap;
+  color: #52615b;
+  font-size: .8rem;
+  text-transform: uppercase;
+}
+
+.field-validation,
+.validation-summary {
+  color: #a12622;
+  font-size: .875rem;
+}
+
+.validation-summary ul {
+  margin-bottom: 0;
+}
+
+.admin-empty {
+  padding: 1rem 0;
+  color: #65736d;
+}
+
+@media (max-width: 760px) {
+  .admin-page {
+    margin: 1rem 0;
+  }
+
+  .admin-columns {
+    grid-template-columns: 1fr;
+    gap: 2.5rem;
+  }
+}
+
 .form-floating > .form-control-plaintext::placeholder, .form-floating > .form-control::placeholder {
   color: var(--bs-secondary-color);
   text-align: end;

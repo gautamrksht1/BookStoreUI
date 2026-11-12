@@ -8,10 +8,15 @@ public class HomeController : Controller
 {
     private readonly HttpClient _client;
 
-    private static string GetServiceUrl(string environmentVariableName, string fallback)
+    private static string GetServiceUrl(string environmentVariableName)
     {
         var configured = Environment.GetEnvironmentVariable(environmentVariableName);
-        return string.IsNullOrWhiteSpace(configured) ? fallback : configured.TrimEnd('/');
+        if (string.IsNullOrWhiteSpace(configured))
+        {
+            throw new InvalidOperationException($"{environmentVariableName} environment variable must be set");
+        }
+
+        return configured.TrimEnd('/');
     }
 
     public HomeController(IHttpClientFactory factory)
@@ -21,7 +26,7 @@ public class HomeController : Controller
 
     public async Task<IActionResult> Index()
     {
-        var catalogUrl = GetServiceUrl("CATALOG_SERVICE_URL", "http://localhost:8001");
+        var catalogUrl = GetServiceUrl("CATALOG_SERVICE_URL");
 
         try
         {
@@ -38,7 +43,7 @@ public class HomeController : Controller
     [HttpPost]
     public async Task<IActionResult> Buy(int bookId, int quantity)
     {
-        var orderUrl = GetServiceUrl("ORDER_SERVICE_URL", "http://localhost:8002");
+        var orderUrl = GetServiceUrl("ORDER_SERVICE_URL");
 
         try
         {
